@@ -108,7 +108,7 @@ public class RequestValidator implements Validator {
                 
             case "email2":
             	if (!isValidEmailDomain(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be a valid email domain.");
+                    errors.rejectValue("param_value", "param_value.invalid", "이메일 잘못쳤어");
                 }
                 break;
                 
