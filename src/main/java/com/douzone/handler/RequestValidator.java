@@ -102,7 +102,7 @@ public class RequestValidator implements Validator {
             case "sworker_reduce":
             case "workinjury_reduce":
             	if (!isPositiveInteger(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be a positive integer.");
+                    errors.rejectValue("param_value", "param_value.invalid", "양수만 쳐");
                 }
                 break;
                 
