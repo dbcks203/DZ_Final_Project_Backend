@@ -32,8 +32,6 @@ public class InputService {
 		
 		UtilService.decrypt_list(earner_search);
 		
-		
-		
 		return earner_search;
 	}
 
