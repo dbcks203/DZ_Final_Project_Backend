@@ -92,7 +92,7 @@ public class RequestValidator implements Validator {
             case "phone3":
             case "occupation_code":
                 if (!(Pattern.matches("^\\d{3,4}$", param_value))) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be a 3-4 digit number.");
+                    errors.rejectValue("param_value", "param_value.invalid", "번호는 3-4자의 숫자야");
                 }
                 break;
                 
