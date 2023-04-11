@@ -124,9 +124,6 @@ public class RequestValidator implements Validator {
             case "etc":
             	break;
         }
-        if (param_value.isEmpty()) {
-            errors.rejectValue("param_value", "param_value.empty", "ParamValue should not be empty.");
-        }
     }
     
     private boolean isPositiveInteger(String value) {
