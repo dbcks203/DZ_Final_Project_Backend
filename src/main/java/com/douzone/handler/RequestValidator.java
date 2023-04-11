@@ -74,7 +74,7 @@ public class RequestValidator implements Validator {
                 
             case "earner_type":
             	if (!("단기".equals(param_value) || "일반".equals(param_value))) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be '단기' or '일반'.");
+                    errors.rejectValue("param_value", "param_value.invalid", "단기랑 일반만");
                 }
                 break;
                 
