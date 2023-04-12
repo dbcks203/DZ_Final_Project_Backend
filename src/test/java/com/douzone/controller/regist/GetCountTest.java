@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class GetCountTest {
@@ -29,7 +28,7 @@ public class GetCountTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("code_count", 70);
-        log.info("start Nomal");
+       
         mockMvc.perform(post("/regist/get_count")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -41,7 +40,7 @@ public class GetCountTest {
     public void testGetCountMissingParameter() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        log.info("start MissingParam");
+        
         mockMvc.perform(post("/regist/get_count")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -53,7 +52,7 @@ public class GetCountTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("code_count",-1341);
-        log.info("start Negative");
+        
         mockMvc.perform(post("/regist/get_count")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -65,7 +64,7 @@ public class GetCountTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("code_count",0);
-        log.info("start Zero");
+       
         mockMvc.perform(post("/regist/get_count")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -76,7 +75,7 @@ public class GetCountTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("code_count", "hi");
-        log.info("start WorngType");
+       
         mockMvc.perform(post("/regist/get_count")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

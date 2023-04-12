@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EarnerSearchTest {
@@ -29,8 +27,9 @@ public class EarnerSearchTest {
     public void testSearchEarnerNormal() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        params.put("search_value", "testValue");
-        log.info("start Normal");
+        params.put("search_value", "000");
+        params.put("payment_ym", 202207);
+        
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -42,7 +41,8 @@ public class EarnerSearchTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("search_value", "");
-        log.info("start EmptySearchValue");
+        params.put("payment_ym", 202207);
+   
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -54,7 +54,8 @@ public class EarnerSearchTest {
     public void testSearchEarnerMissingWorkerId() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("search_value", "testValue");
-        log.info("start MissingWorkerId");
+        params.put("payment_ym", 202207);
+       
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -65,7 +66,8 @@ public class EarnerSearchTest {
     public void testSearchEarnerMissingSearchValue() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        log.info("start MissingSearchValue");
+        params.put("payment_ym", 202207);
+       
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -76,8 +78,9 @@ public class EarnerSearchTest {
     public void testSearchEarnerEmptyWorkerId() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "");
+        params.put("payment_ym", 202207);
         params.put("search_value", "testValue");
-        log.info("start EmptyWorkerId");
+      
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

@@ -16,9 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class GetEarnerTest {
@@ -30,7 +29,7 @@ public class GetEarnerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000001");
-        log.info("start Normal");
+       
         mockMvc.perform(post("/regist/get_earner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -43,7 +42,7 @@ public class GetEarnerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "123123");
-        log.info("start NotExist");
+        
         mockMvc.perform(post("/regist/get_earner")
         		.contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -55,7 +54,7 @@ public class GetEarnerTest {
     public void testGetEarnerMissingParameter() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        log.info("start MissingParam");
+      
         mockMvc.perform(post("/regist/get_earner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -67,7 +66,7 @@ public class GetEarnerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000000000000000222");
-        log.info("start overflow");
+       
         mockMvc.perform(post("/regist/get_earner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -79,7 +78,7 @@ public class GetEarnerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_code", -1234);
-        log.info("start WrongType");
+       
         mockMvc.perform(post("/regist/get_earner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

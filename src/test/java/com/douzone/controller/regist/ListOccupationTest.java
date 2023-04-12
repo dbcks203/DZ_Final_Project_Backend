@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ListOccupationTest {
@@ -30,7 +28,7 @@ public class ListOccupationTest {
         Map<String, String> params = new HashMap<>();
         params.put("earner_type", "일반");
         params.put("search_value", "소프트");
-        log.info("start Normal");
+      
         mockMvc.perform(post("/regist/list_occupation")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -41,7 +39,7 @@ public class ListOccupationTest {
     @Test
     public void testListOccupationMissingParameter() throws Exception {
         Map<String, String> params = new HashMap<>();
-        log.info("start MissingParam");
+       
         mockMvc.perform(post("/regist/list_occupation")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -53,7 +51,7 @@ public class ListOccupationTest {
         Map<String, String> params = new HashMap<>();
         params.put("earner_type", "invalid");
         params.put("search_value", "소프트");
-        log.info("start InvalidEarnerType");
+       
         mockMvc.perform(post("/regist/list_occupation")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

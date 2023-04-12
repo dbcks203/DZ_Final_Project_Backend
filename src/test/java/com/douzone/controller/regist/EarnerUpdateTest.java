@@ -15,9 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EarnerUpdateTest {
@@ -31,7 +30,7 @@ public class EarnerUpdateTest {
         params.put("param_value", "2028");
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000001");
-        log.info("start Nomal-----------------------------------");
+       
         mockMvc.perform(patch("/regist/earner_update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -44,7 +43,7 @@ public class EarnerUpdateTest {
         params.put("param_value", "Updated Earner");
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000001");
-        log.info("Missing Param-----------------------------------");
+        
         mockMvc.perform(patch("/regist/earner_update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -58,7 +57,7 @@ public class EarnerUpdateTest {
         params.put("param_value", "1234");
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000001");
-        log.info("Invalid---------------------------------------------------");
+       
         mockMvc.perform(patch("/regist/earner_update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -72,7 +71,7 @@ public class EarnerUpdateTest {
         params.put("param_value", "가나다");
         params.put("worker_id", "yuchan2");
         params.put("earner_code", "000001");
-        log.info("Invalid Email---------------------------------------------------");
+       
         mockMvc.perform(patch("/regist/earner_update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

@@ -25,7 +25,7 @@ public class SumTaxTest {
  @Test
  public void testSumTaxNormal() throws Exception {
      SumTaxVO sumTaxVO = SumTaxVO.builder()
-             .earner_code("000013")
+             .earner_code("000001")
              .worker_id("yuchan2")
              .payment_ym(202209)
              .build();

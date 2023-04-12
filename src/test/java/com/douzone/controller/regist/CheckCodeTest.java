@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CheckCodeTest {
@@ -30,7 +28,7 @@ public class CheckCodeTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("custom_code", "123123");
-        log.info("start Nomal");
+       
         mockMvc.perform(post("/regist/check_code")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -43,7 +41,7 @@ public class CheckCodeTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("custom_code", "000001");
-        log.info("start Exist");
+        
         mockMvc.perform(post("/regist/check_code")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -56,7 +54,7 @@ public class CheckCodeTest {
     public void testCheckCodeMissingParameter() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        log.info("start MissingParam");
+     
         mockMvc.perform(post("/regist/check_code")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -68,7 +66,7 @@ public class CheckCodeTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("custom_code", "000000000000000222");
-        log.info("start overflow");
+       
         mockMvc.perform(post("/regist/check_code")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -80,7 +78,7 @@ public class CheckCodeTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("custom_code", 1234);
-        log.info("start WorngType");
+       
         mockMvc.perform(post("/regist/check_code")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

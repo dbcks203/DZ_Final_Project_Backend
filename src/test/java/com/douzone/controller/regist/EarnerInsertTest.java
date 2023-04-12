@@ -15,8 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EarnerInsertTest {
@@ -35,7 +34,7 @@ public class EarnerInsertTest {
         params.put("personal_no", "1234567890");
         params.put("is_native", "내");
         params.put("is_default", 0);
-        log.info("custom-----------------------------------------------------");
+     
         mockMvc.perform(post("/regist/earner_insert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -55,7 +54,7 @@ public class EarnerInsertTest {
         params.put("personal_no", "1234567890");
         params.put("is_native", "내");
         params.put("is_default", 1);
-        log.info("default-----------------------------------------------------");
+      
         mockMvc.perform(post("/regist/earner_insert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -77,7 +76,7 @@ public class EarnerInsertTest {
         params.put("personal_no", "1234567890");
         params.put("is_native", "내");
         params.put("is_default", 1);
-        log.info("Missing Param-----------------------------------------------------");
+        
         mockMvc.perform(post("/regist/earner_insert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -97,7 +96,7 @@ public class EarnerInsertTest {
         params.put("personal_no", "1234567890");
         params.put("is_native", "내");
         params.put("is_default", 1);
-        log.info("Is Exist-----------------------------------------------------");
+       
         mockMvc.perform(post("/regist/earner_insert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -117,7 +116,7 @@ public class EarnerInsertTest {
         params.put("personal_no", "1234567890");
         params.put("is_native", "내");
         params.put("is_default", 1);
-        log.info("invald data-----------------------------------------------------");
+        
         mockMvc.perform(post("/regist/earner_insert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))

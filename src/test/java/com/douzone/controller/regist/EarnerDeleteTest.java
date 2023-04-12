@@ -17,9 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EarnerDeleteTest {
@@ -31,7 +28,7 @@ public class EarnerDeleteTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_codes", Arrays.asList("000101","000102"));
-        log.info("start Nomal----------------------------------------------");
+       
         mockMvc.perform(delete("/regist/earner_delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -44,7 +41,7 @@ public class EarnerDeleteTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_codes", Arrays.asList(-12312312, "반갑습니다"));
-        log.info("WrongParam------------------------------------------------");
+        
         mockMvc.perform(delete("/regist/earner_delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -55,8 +52,7 @@ public class EarnerDeleteTest {
     public void testEarnerDeleteMissingParameter() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        // earner_codes is missing
-        log.info("MissingParam------------------------------------------------");
+        
         mockMvc.perform(delete("/regist/earner_delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
@@ -68,7 +64,7 @@ public class EarnerDeleteTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("earner_codes", Collections.emptyList()); // Empty earner_codes
-        log.info("Empty-----------------------------------------------");
+       
         mockMvc.perform(delete("/regist/earner_delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
