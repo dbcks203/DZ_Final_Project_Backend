@@ -71,6 +71,7 @@
 	      	   as div_modified
       FROM earner
       WHERE worker_id = #{worker_id}
+      ORDER BY earner_code
    </select>
    <!--소득자 등록 정보 출력-->
    <select id="get_earner" resultType="com.douzone.entity.EarnerVO">

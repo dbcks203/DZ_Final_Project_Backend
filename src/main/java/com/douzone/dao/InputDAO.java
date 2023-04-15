@@ -1,7 +1,6 @@
 package com.douzone.dao;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +14,7 @@ import com.douzone.entity.input.TaskDeleteVO;
 import com.douzone.entity.input.TaskInsertVO;
 import com.douzone.entity.input.TaxInsertVO;
 import com.douzone.entity.input.UpdateTaxDateVO;
+import com.douzone.entity.input.UpdateTaxInfoVO;
 
 @Mapper
 @Repository("inputDAO")
@@ -30,7 +30,7 @@ public interface InputDAO {
 
 	void update_taxdate( UpdateTaxDateVO updateTaxDateVO);
 
-	Map<String, Object> update_taxinfo( Map<String, Object> params);
+	Map<String, Object> update_taxinfo(UpdateTaxInfoVO updateTaxInfoVO);
 
 	void task_insert( TaskInsertVO taskInsertVO);
 

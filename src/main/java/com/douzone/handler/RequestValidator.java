@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 import com.douzone.entity.regist.EarnerUpdateVO;
 import java.util.regex.Pattern;
 
+
 public class RequestValidator implements Validator {
 
     @Override
@@ -43,6 +44,7 @@ public class RequestValidator implements Validator {
                 "is_artist",
                 "earner_type",
                 "ins_reduce",
+                "is_sworker",
                 "sworker_type",
                 "occupation_code",
                 "rate_coefficient",
@@ -56,7 +58,8 @@ public class RequestValidator implements Validator {
         }
 
         String param_value = request.getParam_value();
-
+        
+        if(param_value.length()!=0)
         switch (request.getParam_name()) {
             case "is_tuition":
             case "is_artist":
@@ -74,13 +77,13 @@ public class RequestValidator implements Validator {
                 
             case "earner_type":
             	if (!("단기".equals(param_value) || "일반".equals(param_value))) {
-                    errors.rejectValue("param_value", "param_value.invalid", "단기랑 일반만");
+                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be '단기' or '일반'.");
                 }
                 break;
                 
             case "personal_no":
             	if (!isValidPersonalNo(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should be a valid Personal_Number.");
+                    errors.rejectValue("param_value", "param_value.invalid", "번호 형식이 잘못되었습니다. 다시 확인해주세요.");
                 }
             	break;
             	
@@ -91,8 +94,8 @@ public class RequestValidator implements Validator {
             case "phone2":
             case "phone3":
             case "occupation_code":
-                if (!(Pattern.matches("^\\d{3,4}$", param_value))) {
-                    errors.rejectValue("param_value", "param_value.invalid", "번호는 3-4자의 숫자야");
+                if (!(Pattern.matches("^\\d{1,4}$", param_value))) {
+                    errors.rejectValue("param_value", "param_value.invalid", "번호 형식을 확인해주세요. 4자 이하만 허용됩니다.");
                 }
                 break;
                 
@@ -102,25 +105,29 @@ public class RequestValidator implements Validator {
             case "sworker_reduce":
             case "workinjury_reduce":
             	if (!isPositiveInteger(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "양수만 쳐");
+                    errors.rejectValue("param_value", "param_value.invalid", "입력 값이 잘못되었습니다. 다시 확인해주세요.");
                 }
                 break;
                 
             case "email2":
             	if (!isValidEmailDomain(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "이메일 잘못쳤어");
+                    errors.rejectValue("param_value", "param_value.invalid", "이메일 형식이 잘못되었습니다. 다시 확인해주세요.");
                 }
                 break;
                 
             case "email1":
+            	if (!isValidEmailId(param_value)) {
+                    errors.rejectValue("param_value", "param_value.invalid", "이메일 형식을 확인해주세요. 영문과 숫자만 허용됩니다.");
+                }
+                break;
             case "earner_name":
             case "zipcode":
             case "address":
-            case "address_detail":
                 if (isValidInput(param_value)) {
-                    errors.rejectValue("param_value", "param_value.invalid", "ParamValue should contain without special characters.");
+                    errors.rejectValue("param_value", "param_value.invalid", "특수문자 입력은 허용되지 않습니다.");
                 }
                 break;
+            case "address_detail":
             case "etc":
             	break;
         }
@@ -129,16 +136,15 @@ public class RequestValidator implements Validator {
     private boolean isPositiveInteger(String value) {
         try {
             int intValue = Integer.parseInt(value);
-            return intValue > 0;
+            return intValue >= 0;
         } catch (NumberFormatException e) {
             return false;
         }
     }
     
     private boolean isValidPersonalNo(String value) {
-        
-        String rrnPattern = "^\\d{6}-(1|2|3|4)\\d{6}$";
-        String frnPattern = "^\\d{6}-(5|6|7|8)\\d{5}[A-Z]$";
+        String rrnPattern = "^\\d{6}-\\d{7}$";
+        String frnPattern = "^\\d{6}[a-zA-Z\\d]{7}$";
 
         return value.matches(rrnPattern) || value.matches(frnPattern);
     }
@@ -146,6 +152,11 @@ public class RequestValidator implements Validator {
     private boolean isValidEmailDomain(String emailDomain) {
         String emailDomainPattern = "^(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,6}$";
         return emailDomain.matches(emailDomainPattern);
+    }
+    
+    private boolean isValidEmailId(String input) {
+        String inputPattern = "^[0-9A-Za-z]+$";
+        return input.matches(inputPattern);
     }
     
     private boolean isValidInput(String input) {

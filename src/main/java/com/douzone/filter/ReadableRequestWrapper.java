@@ -31,7 +31,7 @@ public class ReadableRequestWrapper extends HttpServletRequestWrapper { // 상�
 	private final Charset encoding;
 	private byte[] rawData;
 	private Map<String, String[]> params = new HashMap<>();
-
+	
 	public ReadableRequestWrapper(HttpServletRequest request) {
 		super(request);
 		this.params.putAll(request.getParameterMap()); // 원래의 파라미터를 저장
@@ -134,7 +134,7 @@ public class ReadableRequestWrapper extends HttpServletRequestWrapper { // 상�
 			}
 		};
 	}
-
+	
 	@Override
 	public BufferedReader getReader() {
 		return new BufferedReader(new InputStreamReader(this.getInputStream(), this.encoding));

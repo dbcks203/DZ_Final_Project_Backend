@@ -39,6 +39,9 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-api'
         exclude group: 'ch.qos.logback', module: 'logback-core'
     }
+    implementation 'com.github.maricn:logback-slack-appender:1.4.0'
+    
+    
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'

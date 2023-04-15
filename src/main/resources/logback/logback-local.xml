@@ -1,3 +1,4 @@
+<!-- 
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<timestamp key="BY_DATE" datePattern="yyyy-MM-dd" />
@@ -15,42 +16,13 @@
 		<root level="INFO">
 			<appender-ref ref="CONSOLE" />
 		</root>
-<!-- 
-		<logger name="org.apache.ibatis" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
 
-		<logger name="org.mybatis.spring.SqlSessionUtils" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
-
-		<logger name="java.sql.Connection" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
-
-		<logger name="java.sql.Statement" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
-
-		<logger name="java.sql.PreparedStatement" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
-
-		<logger name="java.sql.ResultSet" level="INFO"
-			additivity="false">
-			<appender-ref ref="CONSOLE" />
-		</logger>
- -->
 	</springProfile>
 
 
 
 	<springProfile name="prod">
+
 		<appender name="FILE-INFO"
 			class="ch.qos.logback.core.rolling.RollingFileAppender">
 			<file>./log/info/info-${BY_DATE}.log</file>
@@ -114,11 +86,61 @@
 			</rollingPolicy>
 		</appender>
 
+
+		<property name="SLACK_WEBHOOK_URI"
+			value="https://hooks.slack.com/services/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" />
+
+		<appender name="SLACK"
+			class="com.github.maricn.logback.SlackAppender">
+			<webhookUri>${SLACK_WEBHOOK_URI}</webhookUri>
+			<chanel>test</chanel>
+			<username>HelloSlack</username>
+			<colorCoding>true</colorCoding>
+		</appender>
+
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<encoder>
+				<Pattern>%d %-5level %logger{35} - %msg%n</Pattern>
+			</encoder>
+		</appender>
+
+		<appender name="ASYNC_SLACK"
+			class="ch.qos.logback.classic.AsyncAppender">
+			<appender-ref ref="SLACK" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+
 		<root level="INFO">
+
+		</root>
+
+
+
+		<root level="INFO">
+			<appender-ref ref="Console" />
+			
+			<appender-ref ref="ASYNC_SLACK" />
 			<appender-ref ref="FILE-INFO" />
 			<appender-ref ref="FILE-WARN" />
 			<appender-ref ref="FILE-ERROR" />
 		</root>
 	</springProfile>
 
+
+
+
+
+
+
+
+
+
+
+
 </configuration>
+
+
+-->

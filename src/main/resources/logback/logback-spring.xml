@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<timestamp key="BY_DATE" datePattern="yyyy-MM-dd" />
+	<property name="LOG_PATTERN"
+		value="%yellow([%d{yyyy-MM-dd HH:mm:ss}:%-4relative]) %green([%thread]) %highlight(%-5level) %boldWhite([%C.%M:%yellow(%L)]) - %msg%n" />
+
+	<appender name="CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<springProfile name="dev">
+		<root level="INFO">
+			<appender-ref ref="CONSOLE" />
+		</root>
+	</springProfile>
+
+
+	<springProfile name="prod">
+
+		<springProperty name="SLACK_WEBHOOK_URI"
+			source="logging.slack.webhook-uri" />
+		<appender name="SLACK"
+			class="com.github.maricn.logback.SlackAppender">
+			<webhookUri>${SLACK_WEBHOOK_URI}</webhookUri>
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<pattern>%-4relative [%thread] %-5level %class - %msg%n</pattern>
+			</layout>
+			<username>logger</username>
+			<iconEmoji>:stuck_out_tongue_winking_eye:</iconEmoji>
+			<colorCoding>true</colorCoding>
+		</appender>
+
+
+		<appender name="ASYNC_SLACK"
+			class="ch.qos.logback.classic.AsyncAppender">
+			<appender-ref ref="SLACK" />
+			<filter class="com.douzone.filter.HttpStatusFilter" />
+		</appender>
+
+		<appender name="ASYNC_SLACK"
+			class="ch.qos.logback.classic.AsyncAppender">
+			<appender-ref ref="SLACK" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+
+
+
+		<root>
+			<level value="INFO" />
+			<appender-ref ref="CONSOLE" />
+			<appender-ref ref="ASYNC_SLACK" />
+		</root>
+	</springProfile>
+
+
+</configuration>

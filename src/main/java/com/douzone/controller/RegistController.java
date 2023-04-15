@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -29,6 +28,7 @@ import com.douzone.entity.regist.GetOccupationVO;
 import com.douzone.entity.regist.ListOccupationVO;
 import com.douzone.handler.GlobalResponseHandler;
 import com.douzone.handler.RequestValidator;
+import com.douzone.handler.ValidationException;
 import com.douzone.service.RegistService;
 
 
@@ -60,6 +60,9 @@ public class RegistController {
 	public Map<String, Object> earner_list(@PathVariable String worker_id) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("earner_list", registService.earner_list(worker_id));
+		
+		//int plz_errpr =  (int) result.get("plz Error");
+		
 		return gloabalResponseHandler.handleResponse(result, HttpStatus.OK);
 	}
 	
@@ -80,12 +83,13 @@ public class RegistController {
 	@PatchMapping(value = "/regist/earner_update")
 	public Map<String, Object> earner_update(@Valid @RequestBody EarnerUpdateVO earnerUpdateVO) throws Exception {
 		Map<String, Object> result = new HashMap<>();
+		
 		RequestValidator validator = new RequestValidator();
-        Errors errors = new BeanPropertyBindingResult(earnerUpdateVO, "earnerUpdateVO");
-        validator.validate(earnerUpdateVO, errors);
+		Errors errors = new BeanPropertyBindingResult(earnerUpdateVO, "earnerUpdateVO");
+		validator.validate(earnerUpdateVO, errors);
 
-        if (errors.hasErrors()) {
-        	throw new NotReadablePropertyException(RegistController.class, "earnerUpdateVO", "Invalid Update Parameter");
+		if (errors.hasErrors()) {
+		    throw new ValidationException("Validation failed for earnerUpdateVO", errors);
         } else {
         	registService.earner_update(earnerUpdateVO);
         }
@@ -118,6 +122,7 @@ public class RegistController {
 	public Map<String, Object> earner_delete(@Valid @RequestBody EarnerDeleteVO earnerDeleteVO) {
 		Map<String, Object> result = new HashMap<>();
 		registService.earner_delete(earnerDeleteVO);
+		
 		return gloabalResponseHandler.handleResponse(result, HttpStatus.OK);
 	}
 }

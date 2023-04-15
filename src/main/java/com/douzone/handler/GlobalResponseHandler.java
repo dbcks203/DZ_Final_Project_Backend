@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.TypeMismatchException;
@@ -41,7 +42,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestControllerAdvice
 public class GlobalResponseHandler {
-
+	
+	
+	public static final String RESET = "\u001B[0m";
+	public static final String RED = "\u001B[31m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String CYAN = "\u001B[36m";
+	
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<ExceptionResponseVO> handleNullPointerException(NullPointerException e) {
 		return buildExceptionResponseVO(HttpStatus.INTERNAL_SERVER_ERROR, "NullPointerException occurred.", e);
@@ -118,6 +125,14 @@ public class GlobalResponseHandler {
 	public ResponseEntity<ExceptionResponseVO> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
 		return buildExceptionResponseVO(HttpStatus.BAD_REQUEST, e.getBindingResult().getFieldError().getDefaultMessage(), e);
 	}
+	
+
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<ExceptionResponseVO> handleValidationException(ValidationException e) {
+	
+	    String defaultMessage =  e.getErrors().getFieldError().getDefaultMessage();
+	    return buildExceptionResponseVO(HttpStatus.BAD_REQUEST, defaultMessage, e);
+	}
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<ExceptionResponseVO> handleNoSuchElementException(NoSuchElementException e) {
@@ -130,17 +145,27 @@ public class GlobalResponseHandler {
 		return buildExceptionResponseVO(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred.", e);
 	}
 
-	// 예외의 공통된 작업을 처리하는 메서드
+	
 	private ResponseEntity<ExceptionResponseVO> buildExceptionResponseVO(HttpStatus status, String message,
 			Exception e) {
 		ExceptionResponseVO errorResponse = new ExceptionResponseVO(status.value(), LocalDateTime.now(), false,
 				message);
-
-		log.error("Server Error: Status - {}, Message - {}, Details - {}", status.value(), message, e.getMessage());
-		log.error("StackTrace:{}", ExceptionUtils.getStackTrace(e));
+		
+		int statusCode = status.value();
+		String logMessage = "Server Error: \n"+color(RED, "Status - {}")+color(GREEN, "\nMessage - {}")+color(CYAN,"\nDetails - {}");
+		
+		if (statusCode >= 500) {
+			log.error(logMessage, statusCode, message, e.getMessage());
+			log.error("StackTrace:{}",ExceptionUtils.getStackTrace(e));
+		}
+		else if (statusCode >= 400) {
+			log.warn(logMessage, statusCode, message, e.getMessage());
+		}  
+		
 		return new ResponseEntity<>(errorResponse, status);
 	}
 
+	
 	// response 전 필요한 작업을 수행하는 메소드
 	@ResponseBody
 	public Map<String, Object> handleResponse(Map<String, Object> result, HttpStatus status) {
@@ -151,5 +176,10 @@ public class GlobalResponseHandler {
 		result.put("status", true);
 		return result;
 	}
+	
+	
+	private static String color(String colorCode, String text) {
+        return colorCode + text + RESET;
+    }
 
 }

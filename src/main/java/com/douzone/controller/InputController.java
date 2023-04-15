@@ -25,6 +25,7 @@ import com.douzone.entity.input.TaskDeleteVO;
 import com.douzone.entity.input.TaskInsertVO;
 import com.douzone.entity.input.TaxInsertVO;
 import com.douzone.entity.input.UpdateTaxDateVO;
+import com.douzone.entity.input.UpdateTaxInfoVO;
 import com.douzone.handler.GlobalResponseHandler;
 import com.douzone.service.InputService;
 
@@ -112,24 +113,10 @@ public class InputController {
 	}
 
 	@PatchMapping(value = "/input/update_taxinfo")
-	public Map<String, Object> update_taxinfo(@RequestBody Map<String, Object> params) throws SQLException {
+	public Map<String, Object> update_taxinfo(@Valid @RequestBody  UpdateTaxInfoVO updateTaxInfoVO) throws SQLException {
 		Map<String, Object> result = new HashMap<>();
-		validateInput(params);
-		result.put("earner_tax", inputService.update_taxinfo(params));
+		result.put("earner_tax", inputService.update_taxinfo(updateTaxInfoVO));
 		return gloabalResponseHandler.handleResponse(result, HttpStatus.OK);
 	}
 	
-	private void validateInput(Map<String, Object> params) {
-		if (!params.containsKey("total_payment") || !params.containsKey("tax_rate") || !params.containsKey("tax_id")) {
-			throw new IllegalArgumentException("Missing required fields: total_payment, tax_rate, or tax_id");
-		}
-
-		int totalPayment = (int) params.get("total_payment");
-		double taxRate = (double) Double.parseDouble(params.get("tax_rate").toString());
-		int taxId = (int) params.get("tax_id");
-
-		if (totalPayment <= 0 || taxRate <= 0 || taxRate >= 10 || taxId <= 0) {
-			throw new IllegalArgumentException("Invalid input: Check your total_payment, tax_rate, and tax_id values");
-		}
-	}
 }

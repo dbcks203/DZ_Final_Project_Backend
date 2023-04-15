@@ -16,8 +16,9 @@ public class EarnerUpdateVO {
 
     @NotBlank(message = "param_name is required")
     private String param_name;
-
-    @NotBlank(message = "param_value is required")
+    
+    
+    
     private String param_value;
 
     @NotBlank(message = "worker_id is required")

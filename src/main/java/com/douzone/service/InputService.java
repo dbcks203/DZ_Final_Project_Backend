@@ -19,6 +19,7 @@ import com.douzone.entity.input.TaskDeleteVO;
 import com.douzone.entity.input.TaskInsertVO;
 import com.douzone.entity.input.TaxInsertVO;
 import com.douzone.entity.input.UpdateTaxDateVO;
+import com.douzone.entity.input.UpdateTaxInfoVO;
 
 @Transactional
 @Service("inputService")
@@ -47,8 +48,8 @@ public class InputService {
 		return inputDAO.get_tax(getTaxVO);
 	}
 	
-	public Map<String,Object> update_taxinfo(Map<String, Object> params) {
-		return inputDAO.update_taxinfo(params);
+	public Map<String,Object> update_taxinfo(UpdateTaxInfoVO updateTaxInfoVO) {
+		return inputDAO.update_taxinfo(updateTaxInfoVO);
 	}
 
 
