@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,18 @@ public class QueryLoggingAspect {
 	
     @Autowired
     private SqlSession sqlSession;
-
+    
+    @Autowired
+	private Environment environment;
+    
     @Around("execution(* *..dao.*.*(..))")
     public Object logSqlAndParams(ProceedingJoinPoint joinPoint) throws Throwable {
+    	String[] activeProfiles = environment.getActiveProfiles();
+	    for (String profile : activeProfiles) {
+	        if ("prod".equals(profile)) {
+	            return joinPoint.proceed();
+	        }
+	    }
         String methodName = joinPoint.getSignature().getName();
         Object[] methodArgs = joinPoint.getArgs();
         String sqlQuery = "";

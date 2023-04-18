@@ -11,6 +11,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,14 +31,24 @@ public class LoggingAspect {
 	public static final String BLUE = "\u001B[34m";
 	public static final String PURPLE = "\u001B[35m";
 	public static final String CYAN = "\u001B[36m";
-
+	
+	@Autowired
+	private Environment environment;
+	
 	@Pointcut("within(*..*Controller)")
 	public void loggerPointCut() {
 	}
 
 	@Around("loggerPointCut()")
 	public Object methodLogger(ProceedingJoinPoint joinPoint) throws Throwable {
-		// 메서드 실행 전 로깅 처리
+
+		String[] activeProfiles = environment.getActiveProfiles();
+	    for (String profile : activeProfiles) {
+	        if ("prod".equals(profile)) {
+	            return joinPoint.proceed();
+	        }
+	    }
+		 
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		long startTime = System.currentTimeMillis();
 		log.info("\nrequest: {}", setMethod(joinPoint,request));
