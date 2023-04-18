@@ -26,6 +26,7 @@ public class TaxInsertVO {
     @Min(value = 200000, message = "payment_ym must be a 6-digit positive number")
     @Max(value = 299999, message = "payment_ym must be a 6-digit positive number")
     private int payment_ym;
-
+    
+    
 	int tax_id;
 }

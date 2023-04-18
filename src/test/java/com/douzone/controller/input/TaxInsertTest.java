@@ -24,9 +24,9 @@ public class TaxInsertTest {
     @Test
     public void testTaxInsertNormal() throws Exception {
         TaxInsertVO taxInsertVO = TaxInsertVO.builder()
-                .earner_code("123456")
+                .earner_code("155230")
                 .worker_id("yuchan2")
-                .payment_ym(202205)
+                .payment_ym(202209)
                 .build();
 
         mockMvc.perform(post("/input/tax_insert")

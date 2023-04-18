@@ -28,7 +28,7 @@ public class GetEarnerTest {
     public void testGetEarnerNormal() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
-        params.put("earner_code", "000001");
+        params.put("earner_code", "155230");
        
         mockMvc.perform(post("/regist/get_earner")
                 .contentType(MediaType.APPLICATION_JSON)

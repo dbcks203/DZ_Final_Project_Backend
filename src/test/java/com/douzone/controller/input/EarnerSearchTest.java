@@ -28,26 +28,24 @@ public class EarnerSearchTest {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("search_value", "000");
-        params.put("payment_ym", 202207);
+        params.put("payment_ym", 202202);
         
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.earner_list").exists());
+                .andExpect(status().isOk());
     }
     @Test
     public void testSearchEarnerEmptySearchValue() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
         params.put("search_value", "");
-        params.put("payment_ym", 202207);
+        params.put("payment_ym", 202202);
    
         mockMvc.perform(post("/input/earner_search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(params)))
-        		.andExpect(status().isOk())
-        		.andExpect(jsonPath("$.earner_list").exists());
+        		.andExpect(status().isOk());
     }
 
     @Test

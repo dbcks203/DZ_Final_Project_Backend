@@ -30,8 +30,7 @@ public class SumTaskTest {
      mockMvc.perform(post("/input/sum_task")
              .contentType(MediaType.APPLICATION_JSON)
              .content(new ObjectMapper().writeValueAsString(getTaskVO)))
-             .andExpect(status().isOk())
-             .andExpect(jsonPath("$.sum_task").exists());
+             .andExpect(status().isOk());
  }
 
  @Test

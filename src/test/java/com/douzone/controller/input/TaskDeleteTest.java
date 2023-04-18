@@ -1,7 +1,6 @@
 package com.douzone.controller.input;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -29,10 +28,10 @@ public class TaskDeleteTest {
 		earner_codes.add("123456");
 		earner_codes.add("789012");
 
-		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(202201)
+		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(202202)
 				.earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isOk());
 	}
 
@@ -44,7 +43,7 @@ public class TaskDeleteTest {
 
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().payment_ym(202201).earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 
@@ -57,7 +56,7 @@ public class TaskDeleteTest {
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(199999)
 				.earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 
@@ -70,7 +69,7 @@ public class TaskDeleteTest {
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(300000)
 				.earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 
@@ -78,7 +77,7 @@ public class TaskDeleteTest {
 	public void testTaskDeleteMissingEarnerCodes() throws Exception {
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(202201).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 
@@ -88,7 +87,7 @@ public class TaskDeleteTest {
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(202201)
 				.earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 
@@ -100,7 +99,7 @@ public class TaskDeleteTest {
 		TaskDeleteVO taskDeleteVO = TaskDeleteVO.builder().worker_id("yuchan2").payment_ym(202201)
 				.earner_codes(earner_codes).build();
 
-		mockMvc.perform(post("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(delete("/input/task_delete").contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(taskDeleteVO))).andExpect(status().isBadRequest());
 	}
 }
