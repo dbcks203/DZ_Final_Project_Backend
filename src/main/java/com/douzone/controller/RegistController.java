@@ -61,7 +61,6 @@ public class RegistController {
 		Map<String, Object> result = new HashMap<>();
 		result.put("earner_list", registService.earner_list(worker_id));
 		
-		int plz_errpr =  (int) result.get("plz Error");
 		
 		return gloabalResponseHandler.handleResponse(result, HttpStatus.OK);
 	}
