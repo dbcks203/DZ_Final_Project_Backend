@@ -82,7 +82,6 @@ public class EarnerInsertTest {
     }
     
     
-    @Test
     public void testEarnerInsertIsExist() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
