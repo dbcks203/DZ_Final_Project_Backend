@@ -28,7 +28,7 @@ public class UpdateTaxInfoTest {
         Map<String, Object> params = new HashMap<>();
         params.put("total_payment", 1000000);
         params.put("tax_rate", 5.0f);
-        params.put("tax_id", 264);
+        params.put("tax_id", 265);
 
         mockMvc.perform(patch("/input/update_taxinfo")
                 .contentType(MediaType.APPLICATION_JSON)

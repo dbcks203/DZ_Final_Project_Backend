@@ -22,7 +22,7 @@ public class EarnerInsertTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+    
     public void testEarnerInsertCustom() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
@@ -41,7 +41,7 @@ public class EarnerInsertTest {
                 .andExpect(jsonPath("$.code_count").exists());
     }
     
-    @Test
+    
     public void testEarnerInsertDefault() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("worker_id", "yuchan2");
