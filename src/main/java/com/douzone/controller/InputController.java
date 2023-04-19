@@ -50,7 +50,7 @@ public class InputController {
 	public Map<String, Object> get_task(@Valid @RequestBody GetTaskVO getTaskVO) throws Exception  {
 		Map<String, Object> result = new HashMap<>();
 		
-		int plz_errpr =  (int) result.get("plz Error");
+		//int plz_errpr =  (int) result.get("plz Error");
 		
 		List<Map<String, Object>> task_list = inputService.get_task(getTaskVO);
 		result.put("task_list", task_list);
