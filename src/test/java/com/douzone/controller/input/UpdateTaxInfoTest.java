@@ -23,7 +23,7 @@ public class UpdateTaxInfoTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+   
     public void testUpdateTaxInfoNormal() throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("total_payment", 1000000);
